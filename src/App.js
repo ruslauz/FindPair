@@ -1,11 +1,14 @@
-import './App.scss';
+import {Component} from 'react';
+import classes from './App.module.scss';
 
-function App() {
-  return (
-    <div className="App">
-      
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className={classes.App}>
+        
+      </div>
+    );
+  }
 }
 
 export default App;
