@@ -1,0 +1,95 @@
+.NameInput {
+  animation: appear ease 1.5s;
+  transition: .7s;
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  &.vanish {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &:focus-within span {
+      text-shadow: 0px 0px 5px  #325fa3;
+    }
+
+  legend {
+    text-transform: uppercase;
+    font-size: 34px;
+    margin: 0 0 20px;
+    padding: 0;
+    font-weight: bold;
+    color:  #172d4d;
+    cursor: default;
+  }
+
+  fieldset {
+    border: none;
+    display: flex;
+    padding: 0;
+    margin: 0 0 20px;
+  }
+
+  label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    color: #325fa3;
+    text-transform: capitalize;
+    font-size: 24px;  
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 20px;;
+    font-size: 24px;
+    border-radius: 5px;
+    border: 2px solid #325fa3;
+    color: #172d4d;
+    text-align: center;
+    outline: none;
+    
+  }
+
+  span  {
+    font-size: 30px;
+    width: 100%;
+
+    &:hover {
+      text-shadow: 0px 0px 5px  #325fa3;
+    } 
+  }
+
+  button {
+    background: #fff;
+    color: #325fa3;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;;
+    font-size: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: .3s;
+
+    &:hover, &:focus {
+      outline: none;
+      text-shadow: 0px 0px 7px  #325fa3;
+      color: #fff;
+    }
+
+    &:disabled {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
