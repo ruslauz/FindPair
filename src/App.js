@@ -10,26 +10,16 @@ class App extends Component {
   minimumUserNameLength = 3;
   nameInputPlaceHolder = `Minimum ${this.minimumUserNameLength} Symbols`
   settings = {
-      // easy: {
-      //   numberOfCards: 20,
-      //   rows: 4,
-      //   columns: 5
-      // },
       easy: {
-        numberOfCards: 4,
-        rows: 2,
-        columns: 2
+        numberOfCards: 20,
+        rows: 4,
+        columns: 5
       },
       normal: {
-        numberOfCards: 4,
-        rows: 2,
-        columns: 2
+        numberOfCards: 24,
+        rows: 4,
+        columns: 6
       },
-      // normal: {
-      //   numberOfCards: 24,
-      //   rows: 4,
-      //   columns: 6
-      // },
       hard: {
         numberOfCards: 30,
         rows: 5,
