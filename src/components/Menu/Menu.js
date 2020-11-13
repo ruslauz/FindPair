@@ -1,4 +1,4 @@
-import classes from './Menu.module.scss';
+// import classes from './Menu.module.scss';
 
 const Menu = props => {
   return (

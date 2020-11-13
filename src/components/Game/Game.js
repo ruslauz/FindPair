@@ -12,12 +12,14 @@ class Game extends Component {
   style = {gridTemplateColumns: `repeat(${this.columns}, 1fr)`, gridTemplateRows: `repeat(${this.rows}, 1fr)`};
   cards = this.makeRandomArrayOfCards(this.numberOfCards)
   state = {
+    vanish: false,
     openedCardsHooks: [],
     openedCardsNumber: 0,
     steps: 0,
     firstCardValue: null,
     secondCardValue: null,
     cardReset: false,
+    leftCards: this.numberOfCards
   }
 
   makeRandomArrayOfCards(carsdsAmount) {
@@ -28,16 +30,6 @@ class Game extends Component {
     for (let i = 0; result.length < carsdsAmount; i++){
       fillSetAndArray(set1, carsdsAmount/2, result)
       fillSetAndArray(set2, carsdsAmount/2, result)
-      // let num1 = Math.floor(Math.random() * (carsdsAmount/2) + 1);
-      // let num2 = Math.floor(Math.random() * (carsdsAmount/2) + 1);
-      // if (!set1.has(num1)) {
-      //   set1.add(num1)
-      //   result.push(num1)
-      // }
-      // if (!set2.has(num2)) {
-      //   set2.add(num2)
-      //   result.push(num2)
-      // }
     }
 
     return result
@@ -65,17 +57,25 @@ class Game extends Component {
   componentDidUpdate() {
     if (this.state.openedCardsNumber === 2) {
       setTimeout(() => {
-        if (this.state.firstCardValue !== this.state.secondCardValue) this.state.openedCardsHooks.forEach(hook => hook(false))
+        if (this.state.firstCardValue !== this.state.secondCardValue) {
+          this.state.openedCardsHooks.forEach(hook => hook(false))
+        } else {
+          this.setState({leftCards: this.state.leftCards - 2})
+        }
         this.setState({
           steps: this.state.steps + 1,
           openedCardsHooks: [],
           secondCardValue: null,
           firstCardValue: null
+        }, () => {
+          if (!this.state.leftCards) {
+            this.saveScore()
+            this.setState({vanish: true})
+            setTimeout(() =>  this.props.finishGameHandler(this.state.steps), 700)
+          }
         })
       }, 1000)
-      this.setState({
-        openedCardsNumber: 0
-      })     
+      this.setState({openedCardsNumber: 0})     
     }
   }
 
@@ -88,17 +88,30 @@ class Game extends Component {
       steps: 0,
       firstCardValue: null,
       secondCardValue: null,
+      leftCards: this.numberOfCards
     },
       () => {this.cards = this.makeRandomArrayOfCards(this.numberOfCards)})
   }
 
   saveScore = () => {
-    localStorage.setItem('highScore', [])
+    if (!localStorage.getItem('highScore') || Array.isArray(JSON.parse(localStorage.getItem('highScore')))) localStorage.setItem('highScore', JSON.stringify({}))
+    const highScore = JSON.parse(localStorage.getItem('highScore'))
+    const player = this.props.playerName
+    const score = this.state.steps
+    console.log(highScore, player, score);
+    highScore[player] = highScore[player] && (highScore[player] < score) ? highScore[player] : score
+    console.log();
+    localStorage.setItem('highScore', JSON.stringify(highScore))
+
+    console.log(JSON.parse(localStorage.getItem('highScore')));
   }
 
   render() {
+    const cls = [classes.Game]
+    if (this.state.vanish) cls.push(classes.vanish)
+
     return (
-      <div className={classes.Game}>
+      <div className={cls.join(' ')}>
         <div className={classes.header}>
           <div>
             <div className={classes.player}>Player: <span>{this.props.playerName}</span></div>

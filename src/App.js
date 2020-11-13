@@ -4,6 +4,7 @@ import Menu from './components/Menu/Menu'
 import NameInput from './components/NameInput/NameInput';
 import LevelInput from './components/LevelInput/LevelInput';
 import Game from './components/Game/Game';
+import Finish from './components/Finish/Finish';
 
 class App extends Component {
   minimumUserNameLength = 3;
@@ -60,7 +61,8 @@ class App extends Component {
     return {...this.settings[level],
       playerName: this.state.playerName,
       levelChangeHandler: this.levelChangeHandler,
-      endGameHandler: this.endGameHandler
+      endGameHandler: this.endGameHandler,
+      finishGameHandler: this.finishGameHandler
     }
   }
 
@@ -87,6 +89,13 @@ class App extends Component {
     setTimeout(() => this.setState({game: 'gameStart'}), 700)
   }
 
+  finishGameHandler = score => {
+    this.setState({
+      game: 'gameFinished',
+      score
+    })
+  }
+
   render() {
     return (
       <div className={classes.App}>
@@ -107,6 +116,7 @@ class App extends Component {
           levels={Object.keys(this.settings)}
         />}
         {this.state.game === 'gameStart' && <Game {...this.setGame(this.state.gameLevel)}/>}
+        {this.state.game === 'gameFinished' && <Finish score={this.state.score}/>}
       </div>
     );
   }

@@ -1,5 +1,6 @@
 .Game {
   animation: appear ease 1.5s;
+  transition: .7s;
 
   @keyframes appear {
     from {
@@ -8,6 +9,11 @@
     to {
       opacity: 1;
     }
+  }
+
+  &.vanish {
+    opacity: 0;
+    visibility: hidden;
   }
 
   display: flex;
