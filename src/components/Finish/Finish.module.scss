@@ -1,0 +1,94 @@
+.Finish {
+  animation: appear ease 1.5s;
+  transition: .7s;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  &.vanish {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  
+
+  header {
+    margin: 0 0 20px;
+  }
+
+  h1 {
+     text-transform: uppercase;
+    font-size: 34px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    cursor: default;
+    margin: 0;
+  }
+
+  .player-highscore {
+    font-size: 24px;
+    margin: 0 0 20px;
+
+    &__score {
+      font-weight: bold;
+    }
+
+    &__name {
+      text-transform: capitalize;
+      font-weight: bold;
+    }
+
+    &__level {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  }
+
+    main {
+    margin: 0 0 auto;
+  }
+
+  .action-buttons {
+    margin: 0 0 20px;
+  }
+
+  button {
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 24px;
+    transition: .3s;
+    background: #fff;
+    color: #325fa3;
+    border: 2px solid  #325fa3;
+    border-radius: 5px;
+    text-transform: uppercase;
+    outline: none;
+    font-weight: bold;
+
+    &:hover {
+      background: #325fa3;
+      border-color:  #325fa3;
+      color: #fff;
+      outline: none;
+    }
+
+    &:not(:last-child) {
+      margin: 0 20px 0 0;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    text-transform: capitalize;
+  }
+}

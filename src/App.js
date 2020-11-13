@@ -45,15 +45,7 @@ class App extends Component {
       game: 'levelInput',
       gameLevel: '',
       startButtonDisabled: true,
-    })
-  }
-
-  endGameHandler = () => {
-    this.setState({
-      game: 'nameInput',
-      playerName: '',
-      gameLevel: '',
-      startButtonDisabled: true,
+      score: 0,
     })
   }
 
@@ -62,7 +54,8 @@ class App extends Component {
       playerName: this.state.playerName,
       levelChangeHandler: this.levelChangeHandler,
       endGameHandler: this.endGameHandler,
-      finishGameHandler: this.finishGameHandler
+      finishGameHandler: this.finishGameHandler,
+      saveScore: this.saveScoreHandler
     }
   }
 
@@ -89,11 +82,40 @@ class App extends Component {
     setTimeout(() => this.setState({game: 'gameStart'}), 700)
   }
 
+  retryGameHandler = () => {
+    this.setState({game: 'gameStart'})
+  } 
+
+  endGameHandler = () => {
+    this.setState({
+      game: 'nameInput',
+      playerName: '',
+      gameLevel: '',
+      startButtonDisabled: true,
+    })
+  }
+
   finishGameHandler = score => {
     this.setState({
       game: 'gameFinished',
       score
-    })
+    }, this.saveScore)
+  }
+
+  saveScore = () => {
+    if (!localStorage.getItem('highScore') || Array.isArray(JSON.parse(localStorage.getItem('highScore')))) localStorage.setItem('highScore', JSON.stringify({}))
+    const highScore = JSON.parse(localStorage.getItem('highScore'))
+    const player = this.state.playerName
+    const score = this.state.score
+    console.log(highScore, player, score);
+    highScore[player] = highScore[player] && (highScore[player] < score) ? highScore[player] : score
+    localStorage.setItem('highScore', JSON.stringify(highScore))
+
+    console.log(JSON.parse(localStorage.getItem('highScore')));
+  }
+
+  getScores = () => {
+
   }
 
   render() {
@@ -116,7 +138,14 @@ class App extends Component {
           levels={Object.keys(this.settings)}
         />}
         {this.state.game === 'gameStart' && <Game {...this.setGame(this.state.gameLevel)}/>}
-        {this.state.game === 'gameFinished' && <Finish score={this.state.score}/>}
+        {this.state.game === 'gameFinished' && <Finish
+          score={this.state.score}
+          playerName={this.state.playerName}
+          level={this.state.gameLevel}
+          retry={this.retryGameHandler}
+          levelChangeHandler={this.levelChangeHandler}
+          endGameHandler={this.endGameHandler}
+        />}
       </div>
     );
   }

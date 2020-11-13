@@ -69,7 +69,6 @@ class Game extends Component {
           firstCardValue: null
         }, () => {
           if (!this.state.leftCards) {
-            this.saveScore()
             this.setState({vanish: true})
             setTimeout(() =>  this.props.finishGameHandler(this.state.steps), 700)
           }
@@ -91,19 +90,6 @@ class Game extends Component {
       leftCards: this.numberOfCards
     },
       () => {this.cards = this.makeRandomArrayOfCards(this.numberOfCards)})
-  }
-
-  saveScore = () => {
-    if (!localStorage.getItem('highScore') || Array.isArray(JSON.parse(localStorage.getItem('highScore')))) localStorage.setItem('highScore', JSON.stringify({}))
-    const highScore = JSON.parse(localStorage.getItem('highScore'))
-    const player = this.props.playerName
-    const score = this.state.steps
-    console.log(highScore, player, score);
-    highScore[player] = highScore[player] && (highScore[player] < score) ? highScore[player] : score
-    console.log();
-    localStorage.setItem('highScore', JSON.stringify(highScore))
-
-    console.log(JSON.parse(localStorage.getItem('highScore')));
   }
 
   render() {
