@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import classes from './App.module.scss';
-import Menu from './components/Menu/Menu'
+// import Menu from './components/Menu/Menu'
 import NameInput from './components/NameInput/NameInput';
 import LevelInput from './components/LevelInput/LevelInput';
 import Game from './components/Game/Game';
@@ -31,6 +31,7 @@ class App extends Component {
     playerName: '',
     gameLevel: '',
     startButtonDisabled: true,
+    highScores: {}
   }
 
   levelSelectHandler = e => {
@@ -55,7 +56,7 @@ class App extends Component {
       levelChangeHandler: this.levelChangeHandler,
       endGameHandler: this.endGameHandler,
       finishGameHandler: this.finishGameHandler,
-      saveScore: this.saveScoreHandler
+      setHighScoresState: this.setHighScoresState
     }
   }
 
@@ -82,8 +83,10 @@ class App extends Component {
     setTimeout(() => this.setState({game: 'gameStart'}), 700)
   }
 
-  retryGameHandler = () => {
-    this.setState({game: 'gameStart'})
+  retryGameHandler = highScoresHidden => {
+    highScoresHidden 
+    ? this.setState({game: 'gameStart', highScores: {}})
+    : this.setState({game: 'gameStart'})
   } 
 
   endGameHandler = () => {
@@ -95,33 +98,32 @@ class App extends Component {
     })
   }
 
-  finishGameHandler = score => {
-    this.setState({
-      game: 'gameFinished',
-      score
-    }, this.saveScore)
+  finishGameHandler = score => this.setState({score}, this.saveScoreHandler)
+
+  saveScoreHandler = () => {
+    const highScores = this.state.highScores
+    highScores[this.state.playerName] = highScores[this.state.playerName] && (highScores[this.state.playerName] < this.state.score)
+    ? highScores[this.state.playerName]
+    : this.state.score
+    const arrayOfHighScores = Object.entries(highScores).sort((a, b) => a[1] - b[1])
+    this.setState({highScores, arrayOfHighScores, game: 'gameFinished'}, this.setHighscoresToLocalStorage)
   }
 
-  saveScore = () => {
-    if (!localStorage.getItem('highScore') || Array.isArray(JSON.parse(localStorage.getItem('highScore')))) localStorage.setItem('highScore', JSON.stringify({}))
-    const highScore = JSON.parse(localStorage.getItem('highScore'))
-    const player = this.state.playerName
-    const score = this.state.score
-    console.log(highScore, player, score);
-    highScore[player] = highScore[player] && (highScore[player] < score) ? highScore[player] : score
-    localStorage.setItem('highScore', JSON.stringify(highScore))
+  setHighscoresToLocalStorage = () => localStorage.setItem(this.state.gameLevel, JSON.stringify(this.state.highScores))
 
-    console.log(JSON.parse(localStorage.getItem('highScore')));
-  }
+  getHighscoresFromLocalSorage = () => JSON.parse(localStorage.getItem(this.state.gameLevel))
 
-  getScores = () => {
+  deleteHighscoresFromLocalSorage = () => localStorage.removeItem(this.state.gameLevel)
 
+  setHighScoresState = () => {
+    const highScores = this.getHighscoresFromLocalSorage()
+    highScores && this.setState({highScores})
   }
 
   render() {
     return (
       <div className={classes.App}>
-        <Menu />
+        {/* <Menu /> */}
         {this.state.game === 'nameInput' && <NameInput
           onClick={this.nameButtonHandler}
           onChange={this.nameInputHandler}
@@ -140,11 +142,13 @@ class App extends Component {
         {this.state.game === 'gameStart' && <Game {...this.setGame(this.state.gameLevel)}/>}
         {this.state.game === 'gameFinished' && <Finish
           score={this.state.score}
+          arrayOfHighScores={this.state.arrayOfHighScores}
           playerName={this.state.playerName}
           level={this.state.gameLevel}
           retry={this.retryGameHandler}
           levelChangeHandler={this.levelChangeHandler}
           endGameHandler={this.endGameHandler}
+          deleteHighscoresFromLocalSorage={this.deleteHighscoresFromLocalSorage}
         />}
       </div>
     );

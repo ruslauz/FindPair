@@ -54,6 +54,10 @@ class Game extends Component {
     } 
   }
 
+  componentDidMount() {
+    this.props.setHighScoresState()
+  }
+
   componentDidUpdate() {
     if (this.state.openedCardsNumber === 2) {
       setTimeout(() => {
