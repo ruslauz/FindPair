@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import classes from './Card.module.scss';
-import cover from '../../images/cover/cover.svg'
 
 const Card = props => {
   let reset = props.reset

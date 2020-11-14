@@ -1,6 +1,11 @@
 .NameInput {
   animation: appear ease 1.5s;
   transition: .7s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
 
   @keyframes appear {
     from {
