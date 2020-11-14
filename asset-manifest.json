@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/FindPair/static/css/main.190b7126.chunk.css",
+    "main.css": "/FindPair/static/css/main.7cf93d92.chunk.css",
     "main.js": "/FindPair/static/js/main.6b334034.chunk.js",
     "main.js.map": "/FindPair/static/js/main.6b334034.chunk.js.map",
     "runtime-main.js": "/FindPair/static/js/runtime-main.be7deac2.js",
@@ -10,14 +10,14 @@
     "static/js/3.815f064d.chunk.js": "/FindPair/static/js/3.815f064d.chunk.js",
     "static/js/3.815f064d.chunk.js.map": "/FindPair/static/js/3.815f064d.chunk.js.map",
     "index.html": "/FindPair/index.html",
-    "static/css/main.190b7126.chunk.css.map": "/FindPair/static/css/main.190b7126.chunk.css.map",
+    "static/css/main.7cf93d92.chunk.css.map": "/FindPair/static/css/main.7cf93d92.chunk.css.map",
     "static/js/2.201290e5.chunk.js.LICENSE.txt": "/FindPair/static/js/2.201290e5.chunk.js.LICENSE.txt",
     "static/media/Card.module.scss": "/FindPair/static/media/cover.1dd5003e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.be7deac2.js",
     "static/js/2.201290e5.chunk.js",
-    "static/css/main.190b7126.chunk.css",
+    "static/css/main.7cf93d92.chunk.css",
     "static/js/main.6b334034.chunk.js"
   ]
 }
