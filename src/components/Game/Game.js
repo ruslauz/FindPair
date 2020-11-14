@@ -2,14 +2,11 @@ import {Component} from 'react'
 import classes from './Game.module.scss';
 import Card from '../Card/Card';
 
-
 class Game extends Component {
-
   numberOfCards = this.props.numberOfCards
   columns = this.props.columns
   rows = this.props.rows
   style = {gridTemplateColumns: `repeat(${this.columns}, 1fr)`, gridTemplateRows: `repeat(${this.rows}, 1fr)`}
-  // cards = this.makeRandomArrayOfCards(this.numberOfCards)
   clickBlock = false
   state = {
     cards: this.makeRandomArrayOfCards(this.numberOfCards),
@@ -55,6 +52,24 @@ class Game extends Component {
     } 
   }
 
+  resetGame = () => {
+    this.clickBlock = true
+    clearTimeout(this.timeout) /* This Timeout Fixes Bug With Reset Button During Opened Card Checking */
+    this.setState({
+      cardReset: !this.state.cardReset,
+      openedCardsHooks: [],
+      openedCardsNumber: 0,
+      steps: 0,
+      firstCardValue: null,
+      secondCardValue: null,
+      leftCards: this.numberOfCards,
+    })
+    setTimeout(() =>  {
+      this.setState({cards: this.makeRandomArrayOfCards(this.numberOfCards)})
+      this.clickBlock = false
+    }, 500)
+  }
+
   componentDidMount() {
     this.props.setHighScoresState()
   }
@@ -81,25 +96,6 @@ class Game extends Component {
       }, 1000)
       this.setState({openedCardsNumber: 0})     
     }
-  }
-
-
-  resetGame = () => {
-    this.clickBlock = true
-    clearTimeout(this.timeout) /* This Timeout Fixes Bug With Reset Button During Opened Card Checking */
-    this.setState({
-      cardReset: !this.state.cardReset,
-      openedCardsHooks: [],
-      openedCardsNumber: 0,
-      steps: 0,
-      firstCardValue: null,
-      secondCardValue: null,
-      leftCards: this.numberOfCards,
-    })
-    setTimeout(() =>  {
-      this.setState({cards: this.makeRandomArrayOfCards(this.numberOfCards)})
-      this.clickBlock = false
-    }, 500)
   }
 
   render() {

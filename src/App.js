@@ -10,11 +10,6 @@ class App extends Component {
   minimumUserNameLength = 3
   nameInputPlaceHolder = `Minimum ${this.minimumUserNameLength} Symbols`
   settings = {
-      // easy: {
-      //   numberOfCards: 4,
-      //   rows: 2,
-      //   columns: 2
-      // },
       easy: {
         numberOfCards: 20,
         rows: 4,
@@ -38,7 +33,6 @@ class App extends Component {
     startButtonDisabled: true,
     highScores: {}
   }
-
 
  /* Handlers For Name Input Component */
 
@@ -73,7 +67,6 @@ class App extends Component {
     ref.current.classList.add(className)
     setTimeout(() => this.setState({game: 'gameStart'}), this.fadeOutTimout)
   }
-
 
 /* Methods and Handlers For Game Component */
 
@@ -119,7 +112,6 @@ class App extends Component {
     ? this.setState({game: 'gameStart', highScores: {}})
     : this.setState({game: 'gameStart'})
   } 
-
 
   saveScoreHandler = () => {
     const highScores = this.state.highScores

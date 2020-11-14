@@ -13,10 +13,8 @@ const Finish = props => {
     props.deleteHighscoresFromLocalSorage()
     setHighScoresHidden(true)
   }
-
-  const retryGameHandler = highScoresHidden => {
-    props.retry(highScoresHidden)
-  }
+  const retryGameHandler = highScoresHidden => props.retry(highScoresHidden)
+  
   return (
     <div className={classes.Finish}>
       <header>

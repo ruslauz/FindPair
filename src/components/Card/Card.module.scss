@@ -8,15 +8,14 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    background:  #325fa3;
+    background: #325fa3;
     color: #fff;
-    border: 2px solid #fff;
     border-radius: 7px;
     cursor: pointer;
-    font-size: calc( (100vw - 320px)/(1024 - 320) * (46 - 24) + 24px);;
+    font-size: calc( (100vw - 320px)/(1024 - 320) * (46 - 24) + 24px);
     position: relative;
     -webkit-transform-style: preserve-3d;
-    transition: all ease .5s;
+    transition: all ease 0.5s;
   }
 
   .front, .back{

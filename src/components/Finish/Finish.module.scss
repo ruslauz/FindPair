@@ -67,10 +67,10 @@
     cursor: pointer;
     padding: 10px 20px;
     font-size: 24px;
-    transition: .3s;
-    background: #fff;
-    color: #325fa3;
-    border: 2px solid  #325fa3;
+    transition: 0.3s;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #325fa3;
     border-radius: 5px;
     text-transform: uppercase;
     outline: none;
@@ -104,6 +104,7 @@
       font-size: 24px;
       padding: 10px 5px;
       overflow: auto;
+      color: #fff;
     }
     &__name {
       text-align: left;
