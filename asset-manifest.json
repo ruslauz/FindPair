@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/FindPair/static/css/main.3fb5dc10.chunk.css",
-    "main.js": "/FindPair/static/js/main.edb63568.chunk.js",
-    "main.js.map": "/FindPair/static/js/main.edb63568.chunk.js.map",
+    "main.css": "/FindPair/static/css/main.9f61217e.chunk.css",
+    "main.js": "/FindPair/static/js/main.81e35c81.chunk.js",
+    "main.js.map": "/FindPair/static/js/main.81e35c81.chunk.js.map",
     "runtime-main.js": "/FindPair/static/js/runtime-main.be7deac2.js",
     "runtime-main.js.map": "/FindPair/static/js/runtime-main.be7deac2.js.map",
     "static/js/2.201290e5.chunk.js": "/FindPair/static/js/2.201290e5.chunk.js",
@@ -10,13 +10,14 @@
     "static/js/3.815f064d.chunk.js": "/FindPair/static/js/3.815f064d.chunk.js",
     "static/js/3.815f064d.chunk.js.map": "/FindPair/static/js/3.815f064d.chunk.js.map",
     "index.html": "/FindPair/index.html",
-    "static/css/main.3fb5dc10.chunk.css.map": "/FindPair/static/css/main.3fb5dc10.chunk.css.map",
-    "static/js/2.201290e5.chunk.js.LICENSE.txt": "/FindPair/static/js/2.201290e5.chunk.js.LICENSE.txt"
+    "static/css/main.9f61217e.chunk.css.map": "/FindPair/static/css/main.9f61217e.chunk.css.map",
+    "static/js/2.201290e5.chunk.js.LICENSE.txt": "/FindPair/static/js/2.201290e5.chunk.js.LICENSE.txt",
+    "static/media/cover.7ef40077.svg": "/FindPair/static/media/cover.7ef40077.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.be7deac2.js",
     "static/js/2.201290e5.chunk.js",
-    "static/css/main.3fb5dc10.chunk.css",
-    "static/js/main.edb63568.chunk.js"
+    "static/css/main.9f61217e.chunk.css",
+    "static/js/main.81e35c81.chunk.js"
   ]
 }
