@@ -6,6 +6,7 @@
   align-items: center;
   height: 100%;
   flex-direction: column;
+  text-align: center;
 
   @keyframes appear {
     from {
@@ -31,7 +32,6 @@
     margin: 0 0 20px;
     padding: 0;
     font-weight: bold;
-    // color:  #172d4d;
     cursor: default;
   }
 
@@ -63,8 +63,12 @@
     text-align: center;
     outline: none;
     text-transform: capitalize;
-    // background: #262c37;
     background: transparent;
+    caret-color: #2894ff;
+    transition: .5s;
+    &:focus {
+      box-shadow: 0 0 5px 1px #2894ff;
+    }
   }
 
   span  {
@@ -72,7 +76,7 @@
     width: 100%;
 
     &:hover {
-      text-shadow: 0px 0px 5px  #325fa3;
+      // text-shadow: 0px 0px 10px  #fff;
     } 
   }
 
@@ -90,7 +94,7 @@
 
     &:hover, &:focus {
       outline: none;
-      text-shadow: 0px 0px 7px  #325fa3;
+      text-shadow: 0px 0px 5px  #fff;
       color: #fff;
     }
 
