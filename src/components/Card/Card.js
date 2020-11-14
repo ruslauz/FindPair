@@ -22,8 +22,8 @@ const Card = props => {
       onClick={onClick}
       >
       <div className={cls.join(' ')} data-value={props.card}>
-        <div className={classes.front} style={{background: `url(${cover}) no-repeat center center/50%`}}></div>
-        <div className={classes.back}>{props.card}</div>
+        <div className={classes.front} ></div>
+        <div className={`${classes.back} ${classes[`back_${props.card}`]}`}></div>
       </div>
     </div>
   )
