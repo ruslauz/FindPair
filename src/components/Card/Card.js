@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import classes from './Card.module.scss';
+import cover from '../../images/cover/cover.svg'
 
 const Card = props => {
   let reset = props.reset
@@ -18,9 +19,10 @@ const Card = props => {
   return (
     <div
       className={classes.container}
-      onClick={onClick}>
+      onClick={onClick}
+      >
       <div className={cls.join(' ')} data-value={props.card}>
-        <div className={classes.front}></div>
+        <div className={classes.front} style={{background: `url(${cover}) no-repeat center center/50%`}}></div>
         <div className={classes.back}>{props.card}</div>
       </div>
     </div>

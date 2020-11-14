@@ -9,18 +9,19 @@ class App extends Component {
   fadeOutTimout = 700
   minimumUserNameLength = 3
   nameInputPlaceHolder = `Minimum ${this.minimumUserNameLength} Symbols`
+  levels=['junior', 'middle', 'senior']
   settings = {
-      easy: {
+      junior: {
         numberOfCards: 20,
         rows: 4,
         columns: 5
       },
-      normal: {
+      middle: {
         numberOfCards: 24,
         rows: 4,
         columns: 6
       },
-      hard: {
+      senior: {
         numberOfCards: 30,
         rows: 5,
         columns: 6

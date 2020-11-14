@@ -70,6 +70,16 @@ class Game extends Component {
     }, 500)
   }
 
+  changeLevel = () => {
+    this.setState({vanish: true},
+      () => setTimeout(this.props.levelChangeHandler, 700))
+  }
+
+  endGame = () => {
+     this.setState({vanish: true},
+      () => setTimeout(this.props.endGameHandler, 700))
+  }
+
   componentDidMount() {
     this.props.setHighScoresState()
   }
@@ -111,8 +121,8 @@ class Game extends Component {
           </div>
           <div className={classes.buttons}>
             <button onClick={this.resetGame}>Reset</button>
-            <button onClick={this.props.levelChangeHandler}>Change Level</button>
-            <button onClick={this.props.endGameHandler}>End Game</button>
+            <button onClick={this.changeLevel}>Change Level</button>
+            <button onClick={this.endGame}>End Game</button>
           </div>
         </div>
         <div className={classes.cards} style={this.style}>

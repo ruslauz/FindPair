@@ -16,7 +16,7 @@ const NameInput = props => {
   return (
     <div className={cls.join(' ')}>
       <fieldset>
-        <legend>Enter Your Name</legend>
+        <legend>Identify Yourself</legend>
         <Input
         type="text"
         name="userName"

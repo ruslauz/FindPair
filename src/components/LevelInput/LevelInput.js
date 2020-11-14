@@ -9,7 +9,7 @@ const LevelInput = props => {
   return (
     <div className={classes.LevelInput} ref={elemRef}>
       <fieldset>
-        <legend>Choose Your Destiny</legend>
+        <legend>What's Your Level</legend>
         {props.levels.map(level => (
           <Input
             key={level}
