@@ -5,13 +5,14 @@ import Card from '../Card/Card';
 
 class Game extends Component {
 
-  numberOfCards = this.props.numberOfCards;
-  columns = this.props.columns;
-  rows = this.props.rows;
-  cardCLickHandler = this.cardCLickHandler.bind(this)
-  style = {gridTemplateColumns: `repeat(${this.columns}, 1fr)`, gridTemplateRows: `repeat(${this.rows}, 1fr)`};
-  cards = this.makeRandomArrayOfCards(this.numberOfCards)
+  numberOfCards = this.props.numberOfCards
+  columns = this.props.columns
+  rows = this.props.rows
+  style = {gridTemplateColumns: `repeat(${this.columns}, 1fr)`, gridTemplateRows: `repeat(${this.rows}, 1fr)`}
+  // cards = this.makeRandomArrayOfCards(this.numberOfCards)
+  clickBlock = false
   state = {
+    cards: this.makeRandomArrayOfCards(this.numberOfCards),
     vanish: false,
     openedCardsHooks: [],
     openedCardsNumber: 0,
@@ -35,7 +36,7 @@ class Game extends Component {
     return result
 
     function fillSetAndArray(set, size, array) {
-      let num = Math.floor(Math.random() * (size) + 1);
+      const num = Math.floor(Math.random() * (size) + 1);
       if (!set.has(num)) {
         set.add(num);
         array.push(num);
@@ -43,12 +44,12 @@ class Game extends Component {
     }
   }
 
-  cardCLickHandler(hook, value, state){
-    if (this.state.openedCardsHooks.length < 2 && !state) {
+  cardCLickHandler = (setOpened, value, isOpened) => {
+    if (this.state.openedCardsHooks.length < 2 && !isOpened && !this.clickBlock) {
+      setOpened(!isOpened)
       this.state.firstCardValue ? this.setState({secondCardValue: value}) : this.setState({firstCardValue: value})
-      hook(true)
       this.setState({
-        openedCardsHooks: this.state.openedCardsHooks.concat(hook),
+        openedCardsHooks: this.state.openedCardsHooks.concat(setOpened),
         openedCardsNumber: this.state.openedCardsNumber + 1
       })
     } 
@@ -60,7 +61,7 @@ class Game extends Component {
 
   componentDidUpdate() {
     if (this.state.openedCardsNumber === 2) {
-      setTimeout(() => {
+      this.timeout = setTimeout(() => {
         if (this.state.firstCardValue !== this.state.secondCardValue) {
           this.state.openedCardsHooks.forEach(hook => hook(false))
         } else {
@@ -84,6 +85,8 @@ class Game extends Component {
 
 
   resetGame = () => {
+    this.clickBlock = true
+    clearTimeout(this.timeout) /* This Timeout Fixes Bug With Reset Button During Opened Card Checking */
     this.setState({
       cardReset: !this.state.cardReset,
       openedCardsHooks: [],
@@ -91,9 +94,12 @@ class Game extends Component {
       steps: 0,
       firstCardValue: null,
       secondCardValue: null,
-      leftCards: this.numberOfCards
-    },
-      () => {this.cards = this.makeRandomArrayOfCards(this.numberOfCards)})
+      leftCards: this.numberOfCards,
+    })
+    setTimeout(() =>  {
+      this.setState({cards: this.makeRandomArrayOfCards(this.numberOfCards)})
+      this.clickBlock = false
+    }, 500)
   }
 
   render() {
@@ -112,10 +118,9 @@ class Game extends Component {
             <button onClick={this.props.levelChangeHandler}>Change Level</button>
             <button onClick={this.props.endGameHandler}>End Game</button>
           </div>
-          
         </div>
         <div className={classes.cards} style={this.style}>
-          {this.cards.map((card, index) => (
+          {this.state.cards.map((card, index) => (
               <Card
                 key={index}
                 card={card}

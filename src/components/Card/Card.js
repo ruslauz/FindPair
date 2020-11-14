@@ -10,7 +10,7 @@ const Card = props => {
   }
 
   useEffect(() => {
-    opened && setOpened(false)
+    setOpened(false)
   }, [reset])
 
   if (opened) cls.push(classes.active)

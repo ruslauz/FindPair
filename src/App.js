@@ -1,15 +1,20 @@
 import {Component} from 'react';
 import classes from './App.module.scss';
-// import Menu from './components/Menu/Menu'
 import NameInput from './components/NameInput/NameInput';
 import LevelInput from './components/LevelInput/LevelInput';
 import Game from './components/Game/Game';
 import Finish from './components/Finish/Finish';
 
 class App extends Component {
-  minimumUserNameLength = 3;
+  fadeOutTimout = 700
+  minimumUserNameLength = 3
   nameInputPlaceHolder = `Minimum ${this.minimumUserNameLength} Symbols`
   settings = {
+      // easy: {
+      //   numberOfCards: 4,
+      //   rows: 2,
+      //   columns: 2
+      // },
       easy: {
         numberOfCards: 20,
         rows: 4,
@@ -34,31 +39,8 @@ class App extends Component {
     highScores: {}
   }
 
-  levelSelectHandler = e => {
-    this.setState({
-      gameLevel: e.target.value,
-      startButtonDisabled: false,
-    })
-  }
 
-  levelChangeHandler = () => {
-    this.setState({
-      game: 'levelInput',
-      gameLevel: '',
-      startButtonDisabled: true,
-      score: 0,
-    })
-  }
-
-  setGame = level => {
-    return {...this.settings[level],
-      playerName: this.state.playerName,
-      levelChangeHandler: this.levelChangeHandler,
-      endGameHandler: this.endGameHandler,
-      finishGameHandler: this.finishGameHandler,
-      setHighScoresState: this.setHighScoresState
-    }
-  }
+ /* Handlers For Name Input Component */
 
   nameInputHandler = (e, hook) => {
     this.setState({playerName: e.target.value.trim()},
@@ -75,19 +57,44 @@ class App extends Component {
  
   nameButtonHandler = hook => {
     hook(true)
-    setTimeout(() => this.setState({game: 'levelInput'}), 700)
-  }
- 
-  startButtonHandler = (ref, className) => {
-    ref.current.classList.add(className)
-    setTimeout(() => this.setState({game: 'gameStart'}), 700)
+    setTimeout(() => this.setState({game: 'levelInput'}), this.fadeOutTimout)
   }
 
-  retryGameHandler = highScoresHidden => {
-    highScoresHidden 
-    ? this.setState({game: 'gameStart', highScores: {}})
-    : this.setState({game: 'gameStart'})
-  } 
+/* Handlers For Level Input Component */
+
+  levelSelectHandler = e => {
+    this.setState({
+      gameLevel: e.target.value,
+      startButtonDisabled: false,
+    })
+  }
+
+  startButtonHandler = (ref, className) => {
+    ref.current.classList.add(className)
+    setTimeout(() => this.setState({game: 'gameStart'}), this.fadeOutTimout)
+  }
+
+
+/* Methods and Handlers For Game Component */
+
+  setGame = level => {
+    return {...this.settings[level],
+      playerName: this.state.playerName,
+      levelChangeHandler: this.levelChangeHandler,
+      endGameHandler: this.endGameHandler,
+      finishGameHandler: this.finishGameHandler,
+      setHighScoresState: this.setHighScoresState,
+    }
+  }
+
+  levelChangeHandler = () => {
+    this.setState({
+      game: 'levelInput',
+      gameLevel: '',
+      startButtonDisabled: true,
+      score: 0,
+    })
+  }
 
   endGameHandler = () => {
     this.setState({
@@ -100,6 +107,20 @@ class App extends Component {
 
   finishGameHandler = score => this.setState({score}, this.saveScoreHandler)
 
+  setHighScoresState = () => {
+    const highScores = this.getHighscoresFromLocalSorage()
+    highScores ? this.setState({highScores}) :  this.setState({highScores: {}})
+  }
+
+/* Methods And Handlers For Finish Component */
+
+  retryGameHandler = highScoresHidden => {
+    highScoresHidden 
+    ? this.setState({game: 'gameStart', highScores: {}})
+    : this.setState({game: 'gameStart'})
+  } 
+
+
   saveScoreHandler = () => {
     const highScores = this.state.highScores
     highScores[this.state.playerName] = highScores[this.state.playerName] && (highScores[this.state.playerName] < this.state.score)
@@ -109,21 +130,17 @@ class App extends Component {
     this.setState({highScores, arrayOfHighScores, game: 'gameFinished'}, this.setHighscoresToLocalStorage)
   }
 
+/* Methods For Local Storage */
+
   setHighscoresToLocalStorage = () => localStorage.setItem(this.state.gameLevel, JSON.stringify(this.state.highScores))
 
   getHighscoresFromLocalSorage = () => JSON.parse(localStorage.getItem(this.state.gameLevel))
 
   deleteHighscoresFromLocalSorage = () => localStorage.removeItem(this.state.gameLevel)
 
-  setHighScoresState = () => {
-    const highScores = this.getHighscoresFromLocalSorage()
-    highScores ? this.setState({highScores}) :  this.setState({highScores: {}})
-  }
-
   render() {
     return (
       <div className={classes.App}>
-        {/* <Menu /> */}
         {this.state.game === 'nameInput' && <NameInput
           onClick={this.nameButtonHandler}
           onChange={this.nameInputHandler}
