@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/FindPair/static/css/main.e2e8ae11.chunk.css",
-    "main.js": "/FindPair/static/js/main.65d1439e.chunk.js",
-    "main.js.map": "/FindPair/static/js/main.65d1439e.chunk.js.map",
+    "main.css": "/FindPair/static/css/main.e65e8c16.chunk.css",
+    "main.js": "/FindPair/static/js/main.1304d0cc.chunk.js",
+    "main.js.map": "/FindPair/static/js/main.1304d0cc.chunk.js.map",
     "runtime-main.js": "/FindPair/static/js/runtime-main.be7deac2.js",
     "runtime-main.js.map": "/FindPair/static/js/runtime-main.be7deac2.js.map",
     "static/js/2.201290e5.chunk.js": "/FindPair/static/js/2.201290e5.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.815f064d.chunk.js": "/FindPair/static/js/3.815f064d.chunk.js",
     "static/js/3.815f064d.chunk.js.map": "/FindPair/static/js/3.815f064d.chunk.js.map",
     "index.html": "/FindPair/index.html",
-    "static/css/main.e2e8ae11.chunk.css.map": "/FindPair/static/css/main.e2e8ae11.chunk.css.map",
+    "static/css/main.e65e8c16.chunk.css.map": "/FindPair/static/css/main.e65e8c16.chunk.css.map",
     "static/js/2.201290e5.chunk.js.LICENSE.txt": "/FindPair/static/js/2.201290e5.chunk.js.LICENSE.txt",
     "static/media/Card.module.scss": "/FindPair/static/media/cover.1dd5003e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.be7deac2.js",
     "static/js/2.201290e5.chunk.js",
-    "static/css/main.e2e8ae11.chunk.css",
-    "static/js/main.65d1439e.chunk.js"
+    "static/css/main.e65e8c16.chunk.css",
+    "static/js/main.1304d0cc.chunk.js"
   ]
 }
