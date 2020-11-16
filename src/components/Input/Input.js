@@ -12,7 +12,7 @@ const Input = props => {
           placeholder={props.placeholder}
           onFocus={props.onFocus}
           onBlur={props.onBlur}
-          autocomplete="off"
+          autoComplete="off"
         />
         <span>{props.LabelText}</span>
       </label>    
