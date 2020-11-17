@@ -20,7 +20,7 @@ const Card = props => {
       className={classes.container}
       onClick={onClick}
       >
-      <div className={cls.join(' ')} data-value={props.card}>
+      <div className={cls.join(' ')}>
         <div className={classes.front} ></div>
         <div className={`${classes.back} ${classes[`back_${props.card}`]}`}></div>
       </div>
