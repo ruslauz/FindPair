@@ -1,13 +1,15 @@
-import {createRef} from 'react'
+import {useState} from 'react'
 import classes from './LevelInput.module.scss'
 import Input from '../Input/Input'
 
 const LevelInput = props => {
-  const elemRef = createRef();
-  const onClick  = () => props.startButtonHandler(elemRef, classes.vanish)
+  const [vanish, setVanish] = useState(false)
+  const onClick  = () => props.startButtonHandler(setVanish)
+  const cls = [classes.LevelInput]
+  vanish && cls.push(classes.vanish)
 
   return (
-    <div className={classes.LevelInput} ref={elemRef}>
+    <div className={cls.join(' ')}>
       <fieldset>
         <legend>What's Your Level</legend>
         {props.levels.map(level => (

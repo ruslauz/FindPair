@@ -9,7 +9,6 @@ class App extends Component {
   fadeOutTimout = 700
   minimumUserNameLength = 3
   nameInputPlaceHolder = `Minimum ${this.minimumUserNameLength} Symbols`
-  levels=['junior', 'middle', 'senior']
   settings = {
       junior: {
         numberOfCards: 20,
@@ -49,7 +48,12 @@ class App extends Component {
   nameInputBlurHandler = e => {
     e.target.placeholder = this.nameInputPlaceHolder
   }
- 
+  
+  nextGameStateChanger = (hook, nextGameState) => {
+    hook(true)
+    setTimeout(() => this.setState({game: nextGameState}), this.fadeOutTimout)
+  }
+
   nameButtonHandler = hook => {
     hook(true)
     setTimeout(() => this.setState({game: 'levelInput'}), this.fadeOutTimout)
@@ -64,8 +68,8 @@ class App extends Component {
     })
   }
 
-  startButtonHandler = (ref, className) => {
-    ref.current.classList.add(className)
+  startButtonHandler = hook => {
+    hook(true)
     setTimeout(() => this.setState({game: 'gameStart'}), this.fadeOutTimout)
   }
 

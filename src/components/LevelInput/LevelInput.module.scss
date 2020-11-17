@@ -1,6 +1,4 @@
 .LevelInput {
-  animation: appear ease 1.5s;
-  transition: .7s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,19 +6,17 @@
   flex-direction: column;
   text-align: center;
 
-  @keyframes appear {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  &.vanish span,
+  &.vanish legend,
+  &.vanish button
+  {
+    transition: .7s;
+    opacity: 0%;
   }
 
-  &.vanish {
-    opacity: 0;
-    visibility: hidden;
-  }
+  legend, span {
+    animation: appear ease 1.5s;
+  } 
 
   legend {
     text-transform: uppercase;
@@ -31,6 +27,7 @@
   }
 
   fieldset {
+    background: #1F243A;
     border: none;
     display: flex;
     flex-direction: column;
@@ -102,3 +99,14 @@
     }
   }
 }
+
+@keyframes appear {
+    from {
+      opacity: 0;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
