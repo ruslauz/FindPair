@@ -20,25 +20,39 @@ class Game extends Component {
     leftCards: this.numberOfCards
   }
 
+  // makeRandomArrayOfCards(carsdsAmount) {
+  //   const set1 = new Set()
+  //   const set2 = new Set()
+  //   const result = []
+
+  //   for (let i = 0; result.length < carsdsAmount; i++){
+  //     fillSetAndArray(set1, carsdsAmount/2, result)
+  //     fillSetAndArray(set2, carsdsAmount/2, result)
+  //   }
+
+  //   return result
+
+  //   function fillSetAndArray(set, size, array) {
+  //     const num = Math.floor(Math.random() * (size) + 1);
+  //     if (!set.has(num)) {
+  //       set.add(num);
+  //       array.push(num);
+  //     }
+  //   }
+  // }
+
   makeRandomArrayOfCards(carsdsAmount) {
-    const set1 = new Set()
-    const set2 = new Set()
-    const result = []
-
-    for (let i = 0; result.length < carsdsAmount; i++){
-      fillSetAndArray(set1, carsdsAmount/2, result)
-      fillSetAndArray(set2, carsdsAmount/2, result)
-    }
-
-    return result
-
-    function fillSetAndArray(set, size, array) {
-      const num = Math.floor(Math.random() * (size) + 1);
-      if (!set.has(num)) {
-        set.add(num);
-        array.push(num);
+    const result = {}
+    const arrayOfPairedNumbers = [...Array(carsdsAmount).keys()].map(i => i%(carsdsAmount/2) + 1)
+    for (let i = 0; i < carsdsAmount; i++) {
+      const index = Math.floor(Math.random() * carsdsAmount + 1)
+      if (!result[index]) {
+        result[index] = arrayOfPairedNumbers[i]
+      } else {
+        i--
       }
     }
+    return Object.values(result)
   }
 
   cardCLickHandler = (setOpened, value, isOpened) => {
