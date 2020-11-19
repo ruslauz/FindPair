@@ -10,6 +10,7 @@ class Game extends Component {
   clickBlock = false
   state = {
     cards: this.makeRandomArrayOfCards(this.numberOfCards),
+    // cards2: this.makeRandomArrayOfCards2(this.numberOfCards),
     vanish: false,
     openedCardsHooks: [],
     openedCardsNumber: 0,
@@ -42,17 +43,17 @@ class Game extends Component {
   // }
 
   makeRandomArrayOfCards(carsdsAmount) {
-    const result = {}
+    const result = [] 
     const arrayOfPairedNumbers = [...Array(carsdsAmount).keys()].map(i => i%(carsdsAmount/2) + 1)
     for (let i = 0; i < carsdsAmount; i++) {
-      const index = Math.floor(Math.random() * carsdsAmount + 1)
+      const index = Math.floor(Math.random() * carsdsAmount)
       if (!result[index]) {
         result[index] = arrayOfPairedNumbers[i]
       } else {
         i--
       }
     }
-    return Object.values(result)
+    return result
   }
 
   cardCLickHandler = (setOpened, value, isOpened) => {
