@@ -1,32 +1,49 @@
-import {useState} from 'react'
-import classes from './LevelInput.module.scss'
-import Input from '../Input/Input'
+import {useSelector, useDispatch} from 'react-redux';
+import {settings} from '../../utils/settings';
+import {changeAppState} from '../../redux/actions/appActions';
+import {changeGameLevel, setLevelSelectionVanished} from '../../redux/actions/levelSelectionActions';
+import {setGame} from '../../redux/actions/gameActions';
+import {setHighScoresState} from '../../utils/sharedMethods';
+import classes from './LevelInput.module.scss';
+import Input from '../Input/Input';
 
-const LevelInput = props => {
-  const [vanish, setVanish] = useState(false)
-  const onClick  = () => props.startButtonHandler(setVanish)
-  const cls = [classes.LevelInput]
-  vanish && cls.push(classes.vanish)
+const LevelInput = () => {
+  const levels = Object.keys(settings)
+  const dispatch = useDispatch();
+  const {vanished, gameLevel} = useSelector(({levelSelection}) => levelSelection);
+  const onClick  = () => {
+    setHighScoresState(dispatch, gameLevel);
+    dispatch(setLevelSelectionVanished());
+    setTimeout(() => {
+      dispatch(setGame(settings[gameLevel]))
+      dispatch(changeAppState('gameStart'))
+    }, 700);
+  }
+  const onChange = e => {
+    dispatch(changeGameLevel(e.target.value))
+  }
+  const isButtonDisabled = !gameLevel;
+  const cls = [classes.LevelInput];
+
+  vanished && cls.push(classes.vanish);
 
   return (
     <div className={cls.join(' ')}>
       <fieldset>
         <legend>What's Your Level</legend>
-        {props.levels.map(level => (
+        {levels.map(level => (
           <Input
             key={level}
             type={"radio"}
             name={"level"}
             value={level}
             LabelText={level}
-            onChange={props.levelChangeHandler}
-          />
+            onChange={onChange}/>
         ))}          
       </fieldset>
       <button
       onClick={onClick}
-      disabled={props.startButtonState}
-      >
+      disabled={isButtonDisabled}>
         Start Game
       </button>
     </div>

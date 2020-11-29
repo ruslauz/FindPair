@@ -1,31 +1,38 @@
-import {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  openCard, 
+  setFirstCard, 
+  setSecondCard, 
+  incOpenedCardsNumber, 
+  setClickBlock, 
+  saveOpenedCardIndex} from '../../redux/actions/gameActions';
 import classes from './Card.module.scss';
 
-const Card = props => {
-  let reset = props.reset
-  const [opened, setOpened] = useState(false)
+const Card = ({isOpened, index, value}) => {
+  const dispatch = useDispatch();
+  const {clickBlock, openedCardsNumber} = useSelector(({game}) => game)
   const cls = [classes.card]
   const onClick = () => {
-    props.onClick(setOpened, props.card, opened)
+    if (clickBlock || isOpened) return;
+    dispatch(setClickBlock(true));
+    dispatch(openCard(index));
+    dispatch(saveOpenedCardIndex(index));
+    dispatch(incOpenedCardsNumber());
+    openedCardsNumber ? dispatch(setSecondCard(value)) : dispatch(setFirstCard(value));
   }
-
-  useEffect(() => {
-    setOpened(false)
-  }, [reset])
-
-  if (opened) cls.push(classes.active)
+  if (isOpened) cls.push(classes.active)
 
   return (
     <div
       className={classes.container}
-      onClick={onClick}
-      >
+      onClick={onClick}>
       <div className={cls.join(' ')}>
-        <div className={classes.front} ></div>
-        <div className={`${classes.back} ${classes[`back_${props.card}`]}`}></div>
+        <div className={classes.front} />
+        <div className={`${classes.back} ${classes[`back_${value}`]}`}/>
       </div>
     </div>
   )
 }
 
-export default Card
+// export default memo(Card);
+export default Card;
