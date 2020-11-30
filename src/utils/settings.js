@@ -1,9 +1,9 @@
 export const settings = {
-      // trainee: {
-      //   numberOfCards: 4,
-      //   rows: 2,
-      //   columns: 2
-      // },
+      trainee: {
+        numberOfCards: 4,
+        rows: 2,
+        columns: 2
+      },
       junior: {
         numberOfCards: 20,
         rows: 4,

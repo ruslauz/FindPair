@@ -1,5 +1,3 @@
-import {} from '../../utils/localStorage';
-
 const initialState = {
   appState: 'nameInput',
   fadeOutTimout: 700,

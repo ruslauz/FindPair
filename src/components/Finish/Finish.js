@@ -1,13 +1,11 @@
 import React from 'react';
-import {useDispatch ,useSelector} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {deleteHighscoresFromLocalSorage} from '../../utils/localStorage';
 import {changeAppState} from '../../redux/actions/appActions';
 import { resetGame } from '../../redux/actions/gameActions';
 import {setFinishVanished, resetFinish} from '../../redux/actions/finishActions';
 import {onChangeLevel, onEndGame, setHighScoresState} from '../../utils/sharedMethods';
 import classes from './Finish.module.scss';
-// import { resetGameLevel } from '../../redux/actions/levelSelectionActions';
-// import { resetNameInput } from '../../redux/actions/nameInputActions';
 
 const Finish = (props) => {
   const dispatch = useDispatch();
@@ -59,7 +57,7 @@ const Finish = (props) => {
         <div>
           <h2>{props.level} Level High Scores</h2>
           <div className={classes.scores}>
-            {/* !highScoresHidden &&  */highScoresTable}
+            {highScoresTable}
           </div>
         </div>
       </main>
