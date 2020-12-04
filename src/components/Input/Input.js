@@ -1,3 +1,4 @@
+import {memo} from 'react';
 
 const Input = props => {
 
@@ -12,11 +13,10 @@ const Input = props => {
           placeholder={props.placeholder}
           onFocus={props.onFocus}
           onBlur={props.onBlur}
-          autoComplete="off"
-        />
+          autoComplete="off"/>
         <span>{props.LabelText}</span>
       </label>    
   )
 }
 
-export default Input
+export default memo(Input);

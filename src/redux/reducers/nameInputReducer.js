@@ -10,10 +10,6 @@ const nameInputReducer = (state = initialState, action) => {
       return {...state, vanished: true};
     case 'SET_PLAYER_NAME':
       return {...state, playerName: action.payload};
-    case 'ON_FOCUS':
-      return {...state, placeholder: ''};
-    case 'ON_BLUR':
-      return {...state, placeholder: initialState.placeholder};
     case 'RESET_NAME_INPUT':
       return {...initialState};
     default:

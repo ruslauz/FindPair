@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {deleteHighscoresFromLocalSorage} from '../../utils/localStorage';
 import {changeAppState} from '../../redux/actions/appActions';
-import { resetGame } from '../../redux/actions/gameActions';
+import {resetProgress} from '../../redux/actions/gameActions';
 import {setFinishVanished, resetFinish} from '../../redux/actions/finishActions';
 import {onChangeLevel, onEndGame, setHighScoresState} from '../../utils/sharedMethods';
 import classes from './Finish.module.scss';
@@ -17,22 +17,22 @@ const Finish = (props) => {
   const cls = [classes.Finish]
   const arrayOfHighScores = Object.entries(highScores).sort((a, b) => a[1] - b[1])
   const highScoresTable = arrayOfHighScores.map(score => (
-                <React.Fragment key={score[0]}>
-                  <div className={classes['scores__name']}>{score[0]}</div>
-                  <div className={classes['scores__score']}>{score[1]}</div>
-                </React.Fragment>
-              ))
+      <React.Fragment key={score[0]}>
+        <div className={classes['scores__name']}>{score[0]}</div>
+        <div className={classes['scores__score']}>{score[1]}</div>
+      </React.Fragment>
+    ))
 
   const onDeleteScores = () => {
     deleteHighscoresFromLocalSorage(gameLevel);
-    setHighScoresState(dispatch, gameLevel);
+    setHighScoresState(gameLevel);
   }
   const onRetry = () => {
     dispatch(setFinishVanished())
     setTimeout(() => {
       dispatch(changeAppState('gameStart'))
       dispatch(resetFinish())
-      dispatch(resetGame());
+      dispatch(resetProgress());
     }, 700)
   }
 

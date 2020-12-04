@@ -37,5 +37,5 @@ export const settings = {
         i--
       }
     }
-    return result
+    return result.map((card, idx) => ({id: idx, value: card, isOpened: false}))
   }

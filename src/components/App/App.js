@@ -4,13 +4,15 @@ import NameInput from '../NameInput/NameInput';
 import LevelInput from '../LevelInput/LevelInput';
 import Game from '../Game/Game';
 import Finish from '../Finish/Finish';
+import { memo } from 'react';
 
 
 
 const App = () => {
-  const {appState} = useSelector(({app}) => app);
+  const appState = useSelector(({app}) => app.appState);
   return (
     <div className={classes.App}>
+      {console.log('app')}
       {appState === 'nameInput' && <NameInput/>}
       {appState === 'levelInput' && <LevelInput/>}
       {appState === 'gameStart' && <Game/>}
@@ -19,4 +21,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default memo(App);

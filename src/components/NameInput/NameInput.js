@@ -1,20 +1,29 @@
+import {memo, useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {setPlayerName, onBlur, onFocus, setNameInputVanished} from '../../redux/actions/nameInputActions'
-import {changeAppState} from '../../redux/actions/appActions'
+import {setPlayerName, setNameInputVanished} from '../../redux/actions/nameInputActions';
+import {changeAppState} from '../../redux/actions/appActions';
 import classes from './NameInput.module.scss';
 import Input from '../Input/Input';
+import Button from '../Button/Button';
 
 const NameInput = () => {
   const dispatch = useDispatch();
   const {vanished, placeholder, playerName} = useSelector(({nameInput}) => nameInput);
-  const onClick = () => {
+  const onClick = useCallback(() => {
     dispatch(setNameInputVanished())
     setTimeout(() => dispatch(changeAppState('levelInput')), 700)
-  }
-  const onChange = e => {
-    e.preventDefault()
-    dispatch(setPlayerName(e.target.value.trim()))
-  }
+  }, [dispatch]) 
+  const onChange = useCallback(e => {
+      e.preventDefault()
+      const value = e.target.value.trim()
+      value && dispatch(setPlayerName(value))
+  }, [dispatch]);
+  const onFocusHandler = useCallback((e) => {
+      e.target.placeholder = '';
+  }, []);
+  const onBlurHandler = useCallback((e) => {
+    e.target.placeholder = placeholder;
+  }, [placeholder]);
   const isButtonDisabled = playerName.length >= 3 ? false : true;
   const cls = [classes.NameInput]
   vanished && cls.push(classes.vanish)
@@ -29,14 +38,12 @@ const NameInput = () => {
         placeholder={placeholder}
         value={playerName}
         onChange={onChange}
-        onFocus={() => dispatch(onFocus())}
-        onBlur={() => dispatch(onBlur())}/>
+        onFocus={onFocusHandler}
+        onBlur={onBlurHandler}/>
       </fieldset>
-      <button onClick={onClick} disabled={isButtonDisabled}>
-        Next
-      </button>
+      <Button onClick={onClick} disabled={isButtonDisabled}>Next</Button>
     </div>
   )
 }
 
-export default NameInput
+export default memo(NameInput);

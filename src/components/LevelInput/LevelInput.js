@@ -1,27 +1,39 @@
+import {useCallback, useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {settings} from '../../utils/settings';
 import {changeAppState} from '../../redux/actions/appActions';
 import {changeGameLevel, setLevelSelectionVanished} from '../../redux/actions/levelSelectionActions';
-import {setGame} from '../../redux/actions/gameActions';
+import {setCards, setGame} from '../../redux/actions/gameActions';
 import {setHighScoresState} from '../../utils/sharedMethods';
 import classes from './LevelInput.module.scss';
 import Input from '../Input/Input';
+import Button from '../Button/Button';
 
 const LevelInput = () => {
   const levels = Object.keys(settings)
   const dispatch = useDispatch();
   const {vanished, gameLevel} = useSelector(({levelSelection}) => levelSelection);
-  const onClick  = () => {
-    setHighScoresState(dispatch, gameLevel);
+
+  /* Трюк - onClick будет закеширован, даже если значение `gameLevel` изменится */
+  const gameLevelRef = useRef();
+  useEffect(() => {
+    gameLevelRef.current = gameLevel
+  }, [gameLevel])
+  const onClick = useCallback(() => {
+    const gameLevel = gameLevelRef.current
+    setHighScoresState(gameLevel);
     dispatch(setLevelSelectionVanished());
     setTimeout(() => {
       dispatch(setGame(settings[gameLevel]))
+      dispatch(setCards())
       dispatch(changeAppState('gameStart'))
     }, 700);
-  }
-  const onChange = e => {
+  }, [dispatch, gameLevelRef])
+
+  const onChange = useCallback(e => {
     dispatch(changeGameLevel(e.target.value))
-  }
+  }, [dispatch])
+
   const isButtonDisabled = !gameLevel;
   const cls = [classes.LevelInput];
 
@@ -41,11 +53,11 @@ const LevelInput = () => {
             onChange={onChange}/>
         ))}          
       </fieldset>
-      <button
-      onClick={onClick}
-      disabled={isButtonDisabled}>
+      <Button 
+        onClick={onClick}
+        disabled={isButtonDisabled}>
         Start Game
-      </button>
+      </Button>
     </div>
   )
 }

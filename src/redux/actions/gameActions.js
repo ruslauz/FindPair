@@ -9,9 +9,9 @@ export const setCards = cards => ({
   type: 'SET_CARDS',
   payload: cards
 });
-export const openCard = index => ({
+export const openCard = (index, value) => ({
   type: 'OPEN_CARD',
-  payload: index
+  payload: {index, value}
 });
 export const closeCards = () => ({
   type: 'CLOSE_CARDS',
@@ -30,16 +30,6 @@ export const setSecondCard = value => ({
 export const incStep = () => ({
   type: 'INC_STEP',
 });
-export const incOpenedCardsNumber = () => ({
-  type: 'INC_OPENED_CARDS_NUMBER',
-});
-export const saveOpenedCardIndex = index => ({
-  type: 'SAVE_OPENED_CARD_INDEX',
-  payload: index
-});
-export const resetStep = () => ({
-  type: 'RESET_STEP',
-});
 export const resetOpenedCardsNumber = () => ({
   type: 'RESET_OPENED_CARDS_NUMBER',
 });
@@ -48,6 +38,9 @@ export const resetOpenedCardIndex = () => ({
 });
 export const setGameVanished = () => ({
   type: 'SET_GAME_VANISHED',
+});
+export const resetProgress = () => ({
+  type: 'RESET_PROGRESS',
 });
 export const resetGame = () => ({
   type: 'RESET_GAME',
