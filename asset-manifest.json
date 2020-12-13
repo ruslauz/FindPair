@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/FindPair/static/css/main.eebc8dd6.chunk.css",
-    "main.js": "/FindPair/static/js/main.60531e81.chunk.js",
+    "main.js": "/FindPair/static/js/main.32a0c65c.chunk.js",
     "runtime-main.js": "/FindPair/static/js/runtime-main.18f1fa78.js",
-    "static/js/2.766210a6.chunk.js": "/FindPair/static/js/2.766210a6.chunk.js",
+    "static/js/2.36dee5ce.chunk.js": "/FindPair/static/js/2.36dee5ce.chunk.js",
     "index.html": "/FindPair/index.html",
-    "static/js/2.766210a6.chunk.js.LICENSE.txt": "/FindPair/static/js/2.766210a6.chunk.js.LICENSE.txt",
+    "static/js/2.36dee5ce.chunk.js.LICENSE.txt": "/FindPair/static/js/2.36dee5ce.chunk.js.LICENSE.txt",
     "static/media/Card.module.scss": "/FindPair/static/media/cover.1dd5003e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.18f1fa78.js",
-    "static/js/2.766210a6.chunk.js",
+    "static/js/2.36dee5ce.chunk.js",
     "static/css/main.eebc8dd6.chunk.css",
-    "static/js/main.60531e81.chunk.js"
+    "static/js/main.32a0c65c.chunk.js"
   ]
 }
