@@ -1,18 +1,19 @@
-import {useCallback, useEffect, useRef} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {memo, useCallback, useEffect, useRef} from 'react';
+import {useSelector, useDispatch, connect} from 'react-redux';
 import {settings} from '../../utils/settings';
 import {changeAppState} from '../../redux/actions/appActions';
-import {changeGameLevel, setLevelSelectionVanished} from '../../redux/actions/levelSelectionActions';
+import {setLevelSelectionVanished, onChange} from '../../redux/actions/levelSelectionActions';
 import {setCards, setGame} from '../../redux/actions/gameActions';
 import {setHighScoresState} from '../../utils/sharedMethods';
 import classes from './LevelInput.module.scss';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 
-const LevelInput = () => {
+const LevelInput = ({onChange}) => {
   const levels = Object.keys(settings)
   const dispatch = useDispatch();
-  const {vanished, gameLevel} = useSelector(({levelSelection}) => levelSelection);
+  const vanished = useSelector(({levelSelection}) => levelSelection.vanished);
+  const gameLevel = useSelector(({levelSelection}) => levelSelection.gameLevel);
 
   /* Трюк - onClick будет закеширован, даже если значение `gameLevel` изменится */
   const gameLevelRef = useRef();
@@ -29,10 +30,6 @@ const LevelInput = () => {
       dispatch(changeAppState('gameStart'))
     }, 700);
   }, [dispatch, gameLevelRef])
-
-  const onChange = useCallback(e => {
-    dispatch(changeGameLevel(e.target.value))
-  }, [dispatch])
 
   const isButtonDisabled = !gameLevel;
   const cls = [classes.LevelInput];
@@ -62,4 +59,4 @@ const LevelInput = () => {
   )
 }
 
-export default LevelInput
+export default connect(undefined, {onChange})(memo(LevelInput))

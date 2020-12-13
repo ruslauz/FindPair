@@ -10,6 +10,8 @@ const nameInputReducer = (state = initialState, action) => {
       return {...state, vanished: true};
     case 'SET_PLAYER_NAME':
       return {...state, playerName: action.payload};
+    case 'SET_PLACEHOLDER':
+      return {...state, placeholder: action.payload};
     case 'RESET_NAME_INPUT':
       return {...initialState};
     default:

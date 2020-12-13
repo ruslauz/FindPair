@@ -1,4 +1,6 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import appReducer from '../redux/reducers/appReducer';
 import nameInputReducer from '../redux/reducers/nameInputReducer';
 import levelSelectionReducer from '../redux/reducers/levelSelectionReducer';
@@ -13,7 +15,7 @@ const rootReducer = combineReducers({
   finish: finishReducer
 })
 
-const store = createStore(rootReducer, undefined, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(rootReducer, undefined, composeWithDevTools(applyMiddleware(thunk)));
 
 
 export default store;

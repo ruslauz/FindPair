@@ -1,21 +1,9 @@
-import { memo, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {changeAppState, setHighScores} from '../../redux/actions/appActions';
-import {
-  setClickBlock, 
-  setFirstCard, 
-  setSecondCard,
-  setGameVanished,
-  incStep,
-  decLeftCards,
-  closeCards,
-  resetOpenedCardsNumber, 
-  resetOpenedCardIndex} from '../../redux/actions/gameActions';
-import {setHighscoresToLocalStorage} from '../../utils/localStorage';
+import {memo, useEffect, useMemo} from 'react';
+import {connect, useSelector} from 'react-redux';
+import {checkOpenedCards, finishGame} from '../../redux/actions/gameActions';
 import Card from '../Card/Card';
 
-const CardBoard = props => {
-  const dispatch = useDispatch();
+const CardBoard = ({checkOpenedCards, finishGame, className}) => {
   const highScores = useSelector(({app}) => app.highScores);
   const playerName = useSelector(({nameInput}) => nameInput.playerName);
   const gameLevel = useSelector(({levelSelection}) => levelSelection.gameLevel);
@@ -33,42 +21,14 @@ const CardBoard = props => {
   const style = useMemo(() => {
     return {gridTemplateColumns: `repeat(${columns}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)`}
   }, [columns, rows]);
-  
-  const checkOpenedCards = equal => {
-    dispatch(setClickBlock(true))
-    dispatch(incStep());
-    dispatch(setFirstCard(null));
-    dispatch(setSecondCard(null));
-    dispatch(resetOpenedCardsNumber());
-
-    setTimeout(() => {
-      equal && dispatch(decLeftCards());
-      !equal && dispatch(closeCards());
-      dispatch(resetOpenedCardIndex()); 
-      dispatch(setClickBlock(false));
-    }, 700)
-  }
-  
-  const finishGame = score => {
-    const highScores = {...score};
-    highScores[playerName] = highScores[playerName] && (highScores[playerName] < steps)
-    ? highScores[playerName]
-    : steps
-    dispatch(setHighScores(highScores));
-    setHighscoresToLocalStorage(gameLevel ,highScores)
-    dispatch(setGameVanished());
-    setTimeout(() => {
-      dispatch(changeAppState('gameFinished'))
-    }, 700)
-  }
 
   useEffect(() => {
     openedCardsIndexes.length === 2 && openedCardsNumber === 2 && !timer && checkOpenedCards(firstCardValue === secondCardValue);
-    leftCards === 0 && !vanished && finishGame(highScores);
+    leftCards === 0 && !vanished && finishGame(highScores, playerName, gameLevel, steps);
   })
 
   return (
-    <div className={props.className} style={style}>
+    <div className={className} style={style}>
       {cards.map(({id, isOpened, value}, index) => (
         <Card
           key={id}
@@ -80,4 +40,4 @@ const CardBoard = props => {
   )
 }
 
-export default memo(CardBoard);
+export default connect(undefined, {checkOpenedCards, finishGame})(memo(CardBoard));

@@ -1,14 +1,11 @@
-import React from 'react';
-import {useDispatch,useSelector} from 'react-redux';
-import {deleteHighscoresFromLocalSorage} from '../../utils/localStorage';
-import {changeAppState} from '../../redux/actions/appActions';
-import {resetProgress} from '../../redux/actions/gameActions';
-import {setFinishVanished, resetFinish} from '../../redux/actions/finishActions';
-import {onChangeLevel, onEndGame, setHighScoresState} from '../../utils/sharedMethods';
+import React, { memo, useCallback } from 'react';
+import {connect, useSelector} from 'react-redux';
+import {setFinishVanished, onDeleteScores, onRetry} from '../../redux/actions/finishActions';
+import {onChangeLevel, onEndGame} from '../../utils/sharedMethods';
+import Button from '../Button/Button';
 import classes from './Finish.module.scss';
 
-const Finish = (props) => {
-  const dispatch = useDispatch();
+const Finish = ({onDeleteScores, onRetry, level}) => {
   const {highScores} = useSelector(({app}) => app);
   const {playerName} = useSelector(({nameInput}) => nameInput);
   const {gameLevel} = useSelector(({levelSelection}) => levelSelection);
@@ -22,19 +19,6 @@ const Finish = (props) => {
         <div className={classes['scores__score']}>{score[1]}</div>
       </React.Fragment>
     ))
-
-  const onDeleteScores = () => {
-    deleteHighscoresFromLocalSorage(gameLevel);
-    setHighScoresState(gameLevel);
-  }
-  const onRetry = () => {
-    dispatch(setFinishVanished())
-    setTimeout(() => {
-      dispatch(changeAppState('gameStart'))
-      dispatch(resetFinish())
-      dispatch(resetProgress());
-    }, 700)
-  }
 
   if (vanished) {
     cls.push(classes.vanish)
@@ -50,22 +34,22 @@ const Finish = (props) => {
           <span className={classes['player-highscore__name']}>{playerName},</span> Your Score is <span className={classes['player-highscore__score']}>{steps}</span> steps on <span className={classes['player-highscore__level']}>{gameLevel}</span> level
         </div>
         <div className={classes['action-buttons']}>
-          <button onClick={onRetry}>Retry</button>
-          <button onClick={() => onChangeLevel(setFinishVanished, dispatch)}>Change Level</button>
-          <button onClick={() => onEndGame(setFinishVanished, dispatch)}>End Game</button>
+          <Button onClick={onRetry}>Retry</Button>
+          <Button onClick={useCallback(() => onChangeLevel(setFinishVanished), [])}>Change Level</Button>
+          <Button onClick={useCallback(() => onEndGame(setFinishVanished), [])}>End Game</Button>
         </div>
         <div>
-          <h2>{props.level} Level High Scores</h2>
+          <h2>{level} Level High Scores</h2>
           <div className={classes.scores}>
             {highScoresTable}
           </div>
         </div>
       </main>
       <footer>
-        <button onClick={onDeleteScores}>Delete Scores</button>
+        <Button onClick={useCallback(() => onDeleteScores(gameLevel), [gameLevel, onDeleteScores])}>Delete Scores</Button>
       </footer>
     </div>
   )
 }
 
-export default Finish;
+export default connect(undefined, {onDeleteScores, onRetry})(memo(Finish));

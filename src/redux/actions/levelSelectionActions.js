@@ -8,3 +8,7 @@ export const changeGameLevel = level => ({
 export const resetGameLevel = () => ({
   type: 'RESET_GAME_LEVEL',
 });
+
+export const onChange = e => dispatch => {
+    dispatch(changeGameLevel(e.target.value))
+  };

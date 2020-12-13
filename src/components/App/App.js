@@ -6,17 +6,18 @@ import Game from '../Game/Game';
 import Finish from '../Finish/Finish';
 import { memo } from 'react';
 
-
+const appStates = {
+  nameInput : <NameInput/>,
+  levelInput: <LevelInput/>,
+  gameStart: <Game/>,
+  gameFinished: <Finish/>,
+}
 
 const App = () => {
   const appState = useSelector(({app}) => app.appState);
   return (
     <div className={classes.App}>
-      {console.log('app')}
-      {appState === 'nameInput' && <NameInput/>}
-      {appState === 'levelInput' && <LevelInput/>}
-      {appState === 'gameStart' && <Game/>}
-      {appState === 'gameFinished' && <Finish/>}
+      {appStates[appState]}
     </div>
   );
 }

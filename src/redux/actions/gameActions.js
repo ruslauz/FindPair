@@ -1,3 +1,6 @@
+import { setHighscoresToLocalStorage } from "../../utils/localStorage";
+import { changeAppState, setHighScores } from "./appActions";
+
 export const setGame = settings => ({
   type: 'SET_GAME',
   payload: settings
@@ -53,4 +56,38 @@ export const setTimer = timer => ({
   type: 'SET_TIMER',
   payload: timer
 });
+export const onResetGame = () => dispatch => {
+    const timer = setTimeout(() => {
+      dispatch(resetProgress());
+    }, 700);
+    dispatch(setTimer(timer))
+    dispatch(setClickBlock(true));
+    dispatch(closeAllCards());
+  };
+export const checkOpenedCards = equal => dispatch => {
+    dispatch(setClickBlock(true))
+    dispatch(incStep());
+    dispatch(setFirstCard(null));
+    dispatch(setSecondCard(null));
+    dispatch(resetOpenedCardsNumber());
+
+    setTimeout(() => {
+      equal && dispatch(decLeftCards());
+      !equal && dispatch(closeCards());
+      dispatch(resetOpenedCardIndex()); 
+      dispatch(setClickBlock(false));
+    }, 700)
+  }
+  export const finishGame = (score, playerName, gameLevel, steps) => dispatch => {
+    const highScores = {...score};
+    highScores[playerName] = highScores[playerName] && (highScores[playerName] < steps)
+    ? highScores[playerName]
+    : steps
+    dispatch(setHighScores(highScores));
+    setHighscoresToLocalStorage(gameLevel ,highScores);
+    dispatch(setGameVanished());
+    setTimeout(() => {
+      dispatch(changeAppState('gameFinished'))
+    }, 700)
+  }
 

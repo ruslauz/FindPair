@@ -1,30 +1,14 @@
 import {memo, useCallback} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  resetProgress, 
-  setClickBlock, 
-  setGameVanished,
-  closeAllCards, 
-  setTimer} from '../../redux/actions/gameActions';
+import {useSelector, connect} from 'react-redux';
+import {setGameVanished, onResetGame} from '../../redux/actions/gameActions';
 import classes from './Game.module.scss';
 import GameInfo from '../GameInfo/GameInfo';
 import CardBoard from '../CardBoard/CardBoard';
 import Button from '../Button/Button';
 import {onChangeLevel, onEndGame} from '../../utils/sharedMethods';
 
-const Game = () => {
-  const dispatch = useDispatch();
+const Game = ({onResetGame}) => {
   const vanished = useSelector(({game}) => game.vanished);
-
-  const onResetGame = useCallback(() => {
-    const timer = setTimeout(() => {
-      dispatch(resetProgress());
-    }, 700);
-    dispatch(setTimer(timer))
-    dispatch(setClickBlock(true));
-    dispatch(closeAllCards());
-  }, [dispatch]); 
-
   const cls = [classes.Game]
 
   if (vanished) cls.push(classes.vanish)
@@ -44,4 +28,4 @@ const Game = () => {
   )
 }
 
-export default memo(Game);
+export default connect(undefined, {onResetGame})(memo(Game));
