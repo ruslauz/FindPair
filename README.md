@@ -1,6 +1,6 @@
 # Find Pair Game
 
-Тестовое практическое задание с использованием [Create React App](https://github.com/facebook/create-react-app).
+Игра "Найди пару" с использованием [Create React App](https://github.com/facebook/create-react-app).
 
 ## Демо
 
